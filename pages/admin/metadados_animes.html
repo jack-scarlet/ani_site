@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyAnimeList - Letter A</title>
+</head>
+<body>
+    <h1>MyAnimeList - Letter A</h1>
+    <div id="animeGrid"></div>
+	
+	<style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        #animeGrid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .animeCard {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h3 {
+            margin-top: 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+    </style>
+
+
+   
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const existingAnimeData = {};
+    const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjJhNjQ3M2ViMjJlMGFiNTQ2ZWY4YmRjYWJmMzFiZGZiMWE2N2VmNTRlODMyZWJmMmMzNTgwZGNjMjUxYmYyOWMyNGUxZGEzYmFjZjlmYjIzIn0.eyJhdWQiOiI2NmFlOWIzYTU5YTUzNWIwMzMxNWVmNjIxMDNiNmU2ZiIsImp0aSI6IjJhNjQ3M2ViMjJlMGFiNTQ2ZWY4YmRjYWJmMzFiZGZiMWE2N2VmNTRlODMyZWJmMmMzNTgwZGNjMjUxYmYyOWMyNGUxZGEzYmFjZjlmYjIzIiwiaWF0IjoxNzE0NDk0MzAwLCJuYmYiOjE3MTQ0OTQzMDAsImV4cCI6MTcxNzA4NjMwMCwic3ViIjoiNTA5MTIyNCIsInNjb3BlcyI6W119.N28TuYyAMsCZMyUgVWFeIkOV9wi5GmH5BI_F0NtuznU-irR-dBGtFixl_vW4QQe5n7cw1uLFyEn232ZVdn1ViyqTH0c6h5Toz-w-NOjnPf0gncGEBUS1jltQr1HgGl6veqhorttfbrGMLpBT7WyB6DhmGQK_MeT0-IG6lLnVeH7MN34QA1rZa-t6XLAmVhGL3y0E_oRlq54cZ-m0g58f_ggQrtUKHB9MeFK8g5UmKPENJ3kTRmqpAPemVDx109Vpje1k3OFBqdV5yS2SXWDo7VZcivuZxNnYO7hAOC2WPROv1PvOAAJiJcqbn5I1fkqP-JyeOPtARpgaACoBUJa_Lg';
+    const apiUrl = 'http://localhost:8080/https://api.myanimelist.net/v2/anime/';
+	    const animeGrid = document.getElementById('animeGrid');
+        const anime_list = 'https://anitsuteste.000webhostapp.com/list/anime_list.json';
+
+
+        function fetchExistingAnimeData() {
+    // Carregar os dados do anime_list.json
+    fetch('anime_list')
+        .then(response => response.json())
+        .then(newData => {
+            console.log('Novos dados:', newData); // Adicionar log para verificar os novos dados
+
+            // Extrair os títulos e IDs dos novos animes de todas as categorias, excluindo "history"
+            const newTitlesAndIds = {};
+            Object.keys(newData).forEach(category => {
+                if (category !== "history") {
+                    newData[category].forEach(anime => {
+                        newTitlesAndIds[anime.title] = anime.id;
+                    });
+                }
+            });
+
+            console.log('Títulos e IDs dos novos animes:', newTitlesAndIds); // Adicionar log para verificar os títulos e IDs dos novos animes
+
+            // Carregar os dados do metadados.json
+            fetch('metadados.json')
+                .then(response => response.json())
+                .then(existingData => {
+                    console.log('Dados existentes:', existingData); // Adicionar log para verificar os dados existentes
+
+                    // Extrair o array de animes de dentro do objeto existingData
+                    const existingAnimes = existingData["#"];
+
+                    // Extrair os títulos existentes e seus respectivos IDs dos animes já existentes
+                    const existingTitlesAndIds = {};
+                    existingAnimes.forEach(anime => {
+                        existingTitlesAndIds[anime.title] = anime.id;
+                    });
+
+                    console.log('Títulos e IDs dos animes existentes:', existingTitlesAndIds); // Adicionar log para verificar os títulos e IDs dos animes existentes
+
+                    // Encontrar os títulos dos novos animes que não existem nos dados existentes
+                    const newTitles = Object.keys(newTitlesAndIds).filter(title => !(title in existingTitlesAndIds));
+                    console.log('Novos títulos:', newTitles); // Adicionar log para verificar os novos títulos
+
+                    // Se não houver novos títulos, não há necessidade de buscar
+                    if (newTitles.length === 0) {
+                        console.log("Não há novos títulos para buscar.");
+                        return;
+                    }
+
+                    // Buscar os IDs dos novos animes
+                    const newIds = newTitles.map(title => newTitlesAndIds[title]);
+
+                    // Buscar os detalhes dos novos IDs
+                    fetchAnimeDetails(newIds)
+                        .then(animeDetails => {
+                            // Mesclar os novos dados com os dados existentes
+                            const mergedData = mergeAnimeData(existingAnimes, animeDetails);
+                            // Salvar os dados mesclados no metadados.json
+                            saveToFile({ "#": mergedData });
+                        })
+                        .catch(error => {
+                            console.error('Erro ao buscar detalhes dos animes:', error);
+                        });
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar dados existentes:', error);
+                });
+        })
+        .catch(error => {
+            console.error('Erro ao carregar dados novos:', error);
+        });
+}
+
+
+
+function fetchAnimeDetails(animeIds) {
+    const delay = 1000; // Atraso de 1000ms (1 segundos) entre as solicitações
+    const maxRetries = 8; // Número máximo de tentativas
+
+    let retryCount = 0;
+
+    function fetchDetailsWithRetry(id) {
+        return new Promise((resolve, reject) => {
+            fetch(`${apiUrl}${id}?fields=id,title,related_anime`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'User-Agent': 'SeuUserAgentAqui',
+                    'Origin': window.location.origin,
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    if (response.status === 504 && retryCount < maxRetries) {
+                        retryCount++;
+                        console.log(`Erro 504 - Tentativa ${retryCount} de ${maxRetries}`);
+                        fetchDetailsWithRetry(id).then(resolve).catch(reject);
+                    } else {
+                        reject(new Error('Erro na solicitação da API'));
+                    }
+                } else {
+                    resolve(response.json());
+                }
+            })
+            .catch(error => {
+                reject(error);
+            });
+        });
+    }
+
+    // Loop assíncrono para fazer uma solicitação por vez com atraso de 2 segundos
+    async function fetchDetailsSequentially(ids) {
+        const animeDetails = [];
+        for (const id of ids) {
+            try {
+                const data = await fetchDetailsWithRetry(id);
+                console.log('Detalhes do anime:', data);
+                animeDetails.push(data);
+            } catch (error) {
+                console.error(`Erro ao buscar detalhes do anime ${id}:`, error);
+                // Continua mesmo em caso de erro
+            }
+            await new Promise(resolve => setTimeout(resolve, delay));
+        }
+        return animeDetails;
+    }
+
+    return fetchDetailsSequentially(animeIds)
+        .then(animeDetails => {
+            // Flatten a lista de arrays em uma lista plana de objetos
+            return animeDetails.flat();
+        })
+        .catch(error => {
+            console.error('Erro ao buscar detalhes dos animes:', error);
+            return []; // Retorna uma lista vazia em caso de erro
+        });
+}
+
+
+function processAndSaveAnimeData(newAnimeData) {
+    // Criar um novo objeto JSON apenas com os novos dados
+    const newDataJson = { "#": newAnimeData };
+
+    // Salvar o JSON atualizado no arquivo
+    saveToFile(newDataJson);
+}
+
+
+
+
+
+function mergeAnimeData(existingData, newAnimeData) {
+    // Mapeia os animes existentes pelo ID para facilitar a atualização
+    const existingAnimeMap = {};
+    existingData.forEach(existingAnime => {
+        existingAnimeMap[existingAnime.id] = existingAnime;
+    });
+
+    // Itera sobre os novos dados
+    newAnimeData.forEach(newAnime => {
+        const existingAnime = existingAnimeMap[newAnime.id];
+        if (existingAnime) {
+            // O anime já existe nos dados existentes, então mescla os dados de related_anime
+            if (!existingAnime.related_anime) {
+                existingAnime.related_anime = []; // Se não existir, cria um array vazio
+            }
+            // Verifica cada novo anime relacionado
+            newAnime.related_anime.forEach(newRelatedAnime => {
+                // Procura pelo mesmo anime relacionado nos dados existentes
+                const existingRelatedAnimeIndex = existingAnime.related_anime.findIndex(item => item.node.id === newRelatedAnime.node.id);
+                if (existingRelatedAnimeIndex === -1) {
+                    // Se o anime relacionado não existir nos dados existentes, adiciona-o
+                    existingAnime.related_anime.push(newRelatedAnime);
+                } else {
+                    // Se o anime relacionado já existir nos dados existentes, mescla os dados
+                    Object.assign(existingAnime.related_anime[existingRelatedAnimeIndex], newRelatedAnime);
+                }
+            });
+        } else {
+            // O anime é novo, então adiciona-o aos dados existentes
+            existingAnimeMap[newAnime.id] = newAnime;
+        }
+    });
+
+    // Retorna a lista atualizada de animes
+    return Object.values(existingAnimeMap).sort((a, b) => a.id - b.id);
+}
+
+
+
+function saveToFile(allAnimeData) {
+    // Ordenar os animes pelo título em ordem alfabética
+    const sortedAnimeData = allAnimeData['#'].sort((a, b) => a.title.localeCompare(b.title));
+
+    const jsonData = JSON.stringify({ '#': sortedAnimeData }, null, 2);
+    const blob = new Blob([jsonData], { type: 'application/json' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'metadados.json';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+
+fetchExistingAnimeData();
+
+});
+
+    </script>
+</body>
+</html>

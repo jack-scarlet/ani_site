@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyAnimeList - Letter A</title>
+</head>
+
+<body>
+    <h1>
+        <center>Carregando a lista do MyAnimeList</center>
+    </h1>
+    <div id="animeGrid"></div>
+    <div id="message"></div>
+
+    <script>
+    
+    document.addEventListener('DOMContentLoaded', function () {
+    const existingAnimeData = {};
+    var token = '';
+    const apiUrl = 'https://cors-anywhere.herokuapp.com/http://api.myanimelist.net/v2/users/Anitsu_Animes/animelist?nsfw=true&fields=id,title,main_picture,alternative_titles,start_date,end_date,synopsis,mean,num_list_users,num_scoring_users,nsfw,created_at,updated_at,media_type,status,genres,my_list_status,num_episodes,start_season,source,average_episode_duration,pictures,background,related_anime,studios,list_status&limit=1000&offset=1000';
+    const historyApiUrl = 'https://cors-anywhere.herokuapp.com/https://api.myanimelist.net/v2/users/Anitsu_Animes/animelist?status=watching&sort=list_updated_at&nsfw=true&limit=100';
+    const animeGrid = document.getElementById('animeGrid');
+    let errorDisplayed = false;
+    let error401Handled = false;
+    let error403Handled = false;
+
+    // Função principal que será chamada após a resolução da promise do token
+    function initialize() {
+        fetchAnimeListAndHistory();
+    }
+
+    // Função para fazer uma solicitação HTTP e obter o conteúdo do arquivo token.json
+    function fetchToken() {
+        return fetch('../../request/get_token.php')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Falha ao obter o token');
+                }
+                return response.json();
+            })
+            .then(data => data.token)
+            .catch(error => {
+                console.error('Erro ao obter o token:', error);
+                throw error;
+            });
+    }
+
+    // Substitua a constante token pelo token obtido do arquivo token.json
+    fetchToken()
+        .then(newToken => {
+            console.log('Token obtido com sucesso');
+            token = newToken; // Define o token obtido
+            initialize(); // Chama a função principal após obter o token
+        })
+        .catch(error => {
+            console.error('Erro ao obter o token:', error);
+        });
+
+    function handleError(error) {
+        if (!errorDisplayed) { // Verifica se o erro já foi exibido
+            errorDisplayed = true; // Define que o erro foi exibido
+            console.error('Ocorreu um erro:', error);
+            // Substituir caracteres de quebra de linha por tags <br> na mensagem de erro
+            const errorMessage = error.message.replace(/\n/g, '<br>');
+            // Exibir erro de forma mais destacada na tela
+            const errorElement = document.createElement('h2');
+            errorElement.innerHTML = errorMessage; // Usando innerHTML para interpretar as tags <br>
+            errorElement.style.color = 'red'; // Define a cor vermelha
+            errorElement.style.textAlign = 'center'; // Centraliza o texto
+            document.body.appendChild(errorElement);
+        }
+        throw error; // Lança o erro novamente para interromper a execução do código
+    }
+
+
+    function fetchAnimeList(offset, token) {
+        const fetchRequest = createFetchRequest(token);
+        return fetch(`${apiUrl}&offset=${offset}`, fetchRequest)
+            .then(handleMalApiErrors)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro durante a solicitação da lista de animes');
+                }
+                return response.json();
+            })
+            .then(data => {
+                processAnimeListData(data);
+                if (data.paging && data.paging.next) {
+                    return fetchAnimeList(offset + 1000, token);
+                }
+            })
+            .catch(error => {
+                handleError(error); // Chama handleError para exibir o erro na tela
+            });
+    }
+
+
+    function fetchHistoryData(token) {
+        const fetchRequest = createFetchRequest(token);
+        return fetch(historyApiUrl, fetchRequest)
+            .then(handleMalApiErrors)
+            .then(response => response.json())
+            .then(historyData => {
+                existingAnimeData['history'] = historyData.data.map(entry => ({
+                    title: entry.node.title,
+                    image: entry.node.main_picture.medium,
+                    url: '',
+                    id: entry.node.id,
+                }));
+            })
+            .catch(handleError);
+    }
+
+//funçaõ para capturar os animes relacionas como prequel, sequel, spin-off
+/*function fetchAnimeListAndDetails(offset, token) {
+    return fetchAnimeList(offset, token)
+        .then(animeListData => {
+            const animeIds = animeListData.data.map(anime => anime.node.id);
+            return fetchAnimeDetails(animeIds, token);
+        })
+        .then(animeDetails => {
+            animeDetails.forEach(detail => {
+                existingAnimeData[detail.id] = detail;
+            });
+
+            return fetchHistoryData(token);
+        })
+        .then(() => {
+            saveToFile(existingAnimeData);
+        });
+}
+
+
+function fetchAnimeDetails(animeIds, token) {
+    const animeDetailsUrls = animeIds.map(animeId => `https://cors-anywhere.herokuapp.com/https://api.myanimelist.net/v2/anime/${animeId}?fields=related_anime,related_manga`);
+    const fetchRequests = animeDetailsUrls.map(url => fetch(url, createFetchRequest(token)));
+
+    return Promise.all(fetchRequests)
+        .then(responses => Promise.all(responses.map(response => response.json())))
+        .catch(handleError);
+}
+*/
+
+    function handleMalApiErrors(response) {
+        if (!response.ok) {
+            switch (response.status) {
+                case 400:
+                    throw new Error('Parâmetros inválidos');
+                case 401:
+                    if (!error401Handled) { // Verifica se o erro 401 já foi tratado
+                        error401Handled = true; // Define que o erro 401 foi tratado
+                        // Abre uma nova guia com o endereço fornecido para o erro 401
+                        window.open('https://anitsuteste.000webhostapp.com/pages/admin/token.html', '_blank');
+                    }
+                    throw new Error('Token inválido ou expirado');
+                case 403:
+                    if (!error403Handled) { // Verifica se o erro 403 já foi tratado
+                        error403Handled = true; // Define que o erro 403 foi tratado
+                        // Abre uma nova guia com o endereço fornecido para o erro 403
+                        window.open('https://cors-anywhere.herokuapp.com/corsdemo', '_blank');
+                    }
+                    throw new Error('Erro: É NECESSÁRIO AUTORIZAR O CORS NA NOVA GUIA\nRECARREGUE ESSA PÁGINA DEPOIS DE AUTORIZADO');
+                case 429:
+                    throw new Error('MUITAS SOLICITAÇÕES CONSECUTIVAS\nTENTE NOVAMENTE MAIS TARDE! ');
+                default:
+                    // Lidar com outros códigos de status não tratados especificamente
+                    throw new Error(`Erro desconhecido da API MAL: ${response.status}`);
+            }
+        }
+        return response;
+    }
+
+
+
+    function createFetchRequest() {
+        return {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'User-Agent': 'SeuUserAgentAqui',
+                'Origin': window.location.origin,
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        };
+    }
+
+    function processAnimeListData(data) {
+    data.data.forEach(anime => {
+        const index = /^[A-Z]/.test(anime.node.title.charAt(0).toUpperCase()) ? anime.node.title.charAt(0).toUpperCase() : '#';
+
+        // Verifica se o índice já existe no objeto existingAnimeData
+        if (!existingAnimeData[index]) {
+            existingAnimeData[index] = [];
+        }
+
+        // Verifica se o anime já existe na lista atual
+        const existingAnime = existingAnimeData[index].find(existing => existing.title === anime.node.title);
+
+        // Se o anime já existe, adiciona o campo 'id'
+        if (existingAnime) {
+            existingAnime.id = anime.node.id;
+			existingAnime.alternative_titles = anime.node.alternative_titles;
+			existingAnime.start_date = anime.node.start_date;
+			existingAnime.end_date = anime.node.end_date;
+			existingAnime.status = anime.node.status;
+			existingAnime.num_episodes = anime.node.num_episodes;
+			existingAnime.start_season = anime.node.start_season;
+			existingAnime.source = anime.node.source;
+			existingAnime.genres = anime.node.genres;
+			existingAnime.related_anime = anime.node.related_anime;
+			existingAnime.studios = anime.node.studios;
+			existingAnime.num_episodes_watched = anime.list_status.num_episodes_watched;
+			existingAnime.status_anime = anime.list_status.status;
+
+
+        } else {
+            // Se não existe, insere o novo anime na lista
+            const animeObject = {
+                id: anime.node.id,
+                title: anime.node.title,
+                image: anime.node.main_picture.medium,
+                url: '',
+				alternative_titles: anime.node.alternative_titles,
+				start_date: anime.node.start_date,
+				end_date: anime.node.end_date,
+				synopsis: anime.node.synopsis,
+				status: anime.node.status,
+				num_episodes: anime.node.num_episodes,
+				start_season: anime.node.start_season,
+				genres: anime.node.genres,
+				source: anime.node.source,
+				related_anime: anime.node.related_anime,
+				studios: anime.node.studios,
+				status_anime: anime.list_status.status,
+				num_episodes_watched: anime.list_status.num_episodes_watched,
+				fansub: '',
+				qualidade: '',
+            };
+            insertAnimeInOrder(existingAnimeData[index], animeObject);
+        }
+    });
+}
+
+
+    function insertAnimeInOrder(animeArray, newAnime) {
+        animeArray.push(newAnime);
+        animeArray.sort((a, b) => a.title.localeCompare(b.title));
+    }
+
+    function saveToFile(allAnimeData) {
+        const jsonData = JSON.stringify(allAnimeData, null, 2);
+
+        fetch('../../request/save_data.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ data: jsonData }),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Falha ao salvar dados no servidor');
+                }
+                const successMessage = 'Dados salvos com sucesso no servidor';
+                console.log(successMessage); // Exibe a mensagem de sucesso no console
+
+                // Exibe a mensagem de sucesso na tela
+                const messageElement = document.getElementById('message');
+                messageElement.textContent = successMessage;
+            })
+            .catch(error => {
+                const errorMessage = 'Erro ao salvar dados: ' + error.message;
+                console.error('Erro ao salvar dados:', error);
+                handleError(new Error(errorMessage)); // Chama handleError apenas para erros
+            });
+    }
+
+
+
+    function fetchAnimeListAndHistory() {
+        fetchAnimeList(0, token)
+            .then(() => fetchHistoryData(token))
+            .then(() => {
+                updateNewNodesWithUrls();
+                saveToFile(existingAnimeData);
+            });
+    }
+
+
+    function updateNewNodesWithUrls() {
+        Object.keys(existingAnimeData).forEach(category => {
+            if (category === 'history') {
+                existingAnimeData[category].forEach(historyNode => {
+                    const existingUrl = getExistingUrl(historyNode.title);
+                    if (existingUrl) {
+                        historyNode.url = existingUrl;
+                        
+                    }
+                });
+            }
+        });
+    }
+
+    function getExistingUrl(title) {
+        const categories = Object.keys(existingAnimeData);
+        for (const category of categories) {
+            if (category !== 'history') {
+                const foundNode = existingAnimeData[category].find(node => node.title === title);
+                if (foundNode && foundNode.url) {
+                    
+                    return foundNode.url;
+                    return foundNode.id;
+                    
+                }
+            }
+        }
+        return null;
+    }
+
+
+    fetch('../../list/anime_list.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Falha ao carregar dados existentes');
+
+            }
+            return response.json();
+        })
+        .then(data => {
+            Object.assign(existingAnimeData, data);
+
+        })
+        .catch(error => console.error('Erro ao carregar dados existentes:', error));
+
+
+});
+
+    </script>
+    
+</body>
+
+</html>
