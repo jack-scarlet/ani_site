@@ -1,0 +1,124 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#botop {
+    margin: 0;
+    text-align: center;
+    position: fixed;
+    /* Define a posição como fixa */
+    top: 0;
+    /* Alinha a div no topo da página */
+    width: 100%;
+    /* Define a largura igual à largura da janela do navegador */
+    background-color: #fff;
+    /* Define um fundo branco */
+    z-index: 999;
+    /* Define uma ordem de empilhamento alta para garantir que a div esteja acima de outros elementos */
+    padding-top: 20px;
+    /* Adiciona um espaço entre o topo da página e a div */
+}
+
+.botao {
+    width: 100px;
+    height: 40px;
+    /* Ajuste a altura conforme necessário */
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    text-align: center;
+    margin: 5px;
+    /* Adiciona algum espaço entre os botões */
+}
+
+.botao:hover {
+    background-color: #45a049;
+    /* Cor verde ao passar o mouse */
+}
+
+.botao-mangas {
+    background-color: #f5c907;
+    /* Cor verde para Mangas */
+}
+
+.botao-url {
+    background-color: #b8b4a5;
+        width: 140px;
+    height: 40px;
+}
+
+.botao-desenhos {
+    background-color: #ED4526;
+    /* Cor laranja para Desenhos */
+}
+
+.botao-animes {
+    background-color: #005eff;
+    /* Cor laranja para Animes */
+}
+
+.container {
+    text-align: center;
+}
+
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+}
+
+h2 {
+    color: #333;
+    text-align: center;
+    /* Centraliza o texto */
+}
+
+label {
+    font-weight: bold;
+    color: #555;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+#message {
+    margin-top: 10px;
+    color: #007bff;
+}
