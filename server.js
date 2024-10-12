@@ -9,8 +9,8 @@ async function captureHref() {
     await page.goto('https://snusnu.click');
 
     // Preenche o formulário de login
-    await page.type('input[name="username"]', 'SEU_USUARIO');  // Ajuste o seletor para o campo correto de username
-    await page.type('input[name="password"]', 'SUA_SENHA');    // Ajuste o seletor para o campo correto de password
+    await page.type('input[name="username"]', 'jacklamperouge0@gmail.com');  // Ajuste o seletor para o campo correto de username
+    await page.type('input[name="password"]', 'mj159753123');    // Ajuste o seletor para o campo correto de password
 
     // Submete o formulário
     await Promise.all([
@@ -19,7 +19,7 @@ async function captureHref() {
     ]);
 
     // Acesse a página onde está o <a> que você quer capturar
-    await page.goto('https://cloud.snusnu.click/nextcloud/s/BriDXHdTjMrRMtB');
+    await page.goto('https://snusnu.click/home');
 
     // Espera o link carregar e captura o href
     const hrefValue = await page.evaluate(() => {
