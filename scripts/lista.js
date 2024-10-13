@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         const searchContainer = document.getElementById('searchContainer');
         const searchInput = document.createElement('input');
         searchInput.type = 'text';
-        searchInput.placeholder = 'Pesquisar Mangas';
+        searchInput.placeholder = 'Pesquisar Animes';
         searchInput.id = 'searchInput';
 
         // Adiciona a caixa de pesquisa ao seu container
@@ -129,13 +129,13 @@ function showAnimesByCategory(animes) {
         });
     } else {
         const noAnimeMessage = document.createElement('p');
-        noAnimeMessage.textContent = 'Nenhum manga encontrado nesta categoria.';
+        noAnimeMessage.textContent = 'Nenhum anime encontrado nesta categoria.';
         animeGrid.appendChild(noAnimeMessage);
     }
 }
 
 
-// Função para pesquisar por manga
+// Função para pesquisar por anime
 function searchByAnime(data) {
     const searchInput = document.getElementById('searchInput');
     const searchTerm = searchInput.value.toLowerCase();
@@ -153,6 +153,6 @@ function searchByAnime(data) {
         }
     });
 
-    // Exibe os mangas correspondentes ou uma mensagem se nenhum for encontrado
+    // Exibe os animes correspondentes ou uma mensagem se nenhum for encontrado
     showAnimesByCategory(matchingAnimes);
 }
