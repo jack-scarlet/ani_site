@@ -93,10 +93,6 @@ function showAnimesByCategory(animes) {
     const animeGrid = document.getElementById('animeGrid');
     animeGrid.innerHTML = '';
 
-             const title = document.createElement('h3');
-            title.textContent = anime.title;
-            title.title = anime.title; // Define o texto do tooltip como o título do anime
-
     // Obtém a URL armazenada no localStorage
     const urlBase = localStorage.getItem('url');
 
@@ -117,7 +113,11 @@ function showAnimesByCategory(animes) {
                 imageLink.href = fullUrl; // Define o URL concatenado
             } else {
                 console.error("URL base não encontrada no localStorage.");
-                imageLink.href = anime.url; // Se não houver URL base, usa a URL do anime
+                if (anime.url) {
+                    imageLink.href = anime.url; // Se não houver URL base, usa a URL do anime
+                } else {
+                    console.error("URL do anime não encontrada.");
+                }
             }
 
             imageLink.target = "_blank";
