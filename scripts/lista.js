@@ -89,6 +89,7 @@ searchContainer.appendChild(searchButton);
 });
 
 // Função para mostrar animes por categoria
+// Função para mostrar animes por categoria
 function showAnimesByCategory(animes) {
     const animeGrid = document.getElementById('animeGrid');
     animeGrid.innerHTML = '';
@@ -103,6 +104,7 @@ function showAnimesByCategory(animes) {
 
             const title = document.createElement('h3');
             title.textContent = anime.title;
+            title.title = anime.title; // Define o texto do tooltip como o título do anime
 
             const imageLink = document.createElement('a');
 
@@ -137,7 +139,6 @@ function showAnimesByCategory(animes) {
         animeGrid.appendChild(noAnimeMessage);
     }
 }
-
 
 // Função para pesquisar por anime
 function searchByAnime(data) {
