@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu</title>
@@ -15,24 +14,22 @@
 </head>
 
 <body>
-    
+
     <div id="botop">
-         <a href='pages/manga_list_index.html'><button id="botaoMangas" class="botao-mangas botao">Mangas</button></a>
-        <a href='pages/desenho_index.html'><button id="botaoDesenhos" class="botao-desenhos botao">Desenhos</button></a>
+        <a href='/pages/manga_list_index'><button id="botaoMangas" class="botao-mangas botao">Mangas</button></a>
+        <a href='/pages/desenho_index'><button id="botaoDesenhos" class="botao-desenhos botao">Desenhos</button></a>
     </div>
 
     <div id="menu"></div>
 
     <div id="searchContainer"></div>
 
-     <button id="botaoDesenhos" class="botao-desenhos botao">Nuvem</button>
+    <button id="botaoDesenhos" class="botao-desenhos botao">Nuvem</button>
 
     <div id="animeGrid"></div>
 
-   
-
     <script>
-       // Garante que o script só seja executado após o carregamento do DOM
+        // Garante que o script só seja executado após o carregamento do DOM
         document.addEventListener('DOMContentLoaded', function() {
             // Função para apagar a URL do localStorage e recarregar a página
             function apagarUrl() {
@@ -44,9 +41,12 @@
                 location.reload();
             }
 
-            // Associa a função ao botão
+            // Associa a função ao botão (verifica se o botão com ID 'apagarUrlButton' existe)
             const apagarUrlButton = document.getElementById('apagarUrlButton');
-            apagarUrlButton.addEventListener('click', apagarUrl);
+            if (apagarUrlButton) {
+                apagarUrlButton.addEventListener('click', apagarUrl);
+            }
+        });
     </script>
 
 </body>
