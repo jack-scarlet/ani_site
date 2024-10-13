@@ -103,7 +103,15 @@ function showAnimesByCategory(animes) {
             title.title = anime.title; // Define o texto do tooltip como o título do anime
 
             const imageLink = document.createElement('a');
-            imageLink.href = `pages/anime_list.html?id=${anime.id}`; // Passa o id do anime como parâmetro de consulta na URL
+// Verifica se a URL base está armazenada
+            if (urlBase) {
+                // Concatena a URL do localStorage com anime.url
+                const fullUrl = urlBase + anime.url;
+                imageLink.href = fullUrl; // Define o URL concatenado
+            } else {
+                console.error("URL base não encontrada no localStorage.");
+                imageLink.href = anime.url; // Se não houver URL base, usa a URL do anime
+            }
 
             imageLink.target = "_blank";
 
@@ -111,7 +119,6 @@ function showAnimesByCategory(animes) {
             image.src = anime.image;
 
             imageLink.appendChild(image);
-
             animeCard.appendChild(title);
             animeCard.appendChild(imageLink);
 
