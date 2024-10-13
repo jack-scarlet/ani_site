@@ -17,7 +17,7 @@
 document.addEventListener('DOMContentLoaded', async function () {
     try {
         // Carrega os dados do JSON
-        const response = await fetch('../list/manga_list.json');
+        const response = await fetch('../list/anime_list.json');
         const data = await response.json();
 
         // Extrai as categorias (letras) dos dados
