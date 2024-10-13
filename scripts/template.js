@@ -178,12 +178,31 @@ document.addEventListener('DOMContentLoaded', function () {
                             listItem.appendChild(link);
                             relatedAnimeList.appendChild(listItem);
 
-                            // Agora, defina os URLs nos botões
-                            const cloudButton = document.getElementById('cloudButton');
-                            const nzbButton = document.getElementById('nzbButton');
-                            const animeUrl = anime.url; // Obtém o URL do anime
-                            cloudButton.dataset.url = animeUrl; // Define o URL no atributo data-url do botão Cloud
-                            nzbButton.dataset.url = animeUrl; // Define o URL no atributo data-url do botão NZB
+                                   // Função para configurar os botões com a URL concatenada
+        function configurarBotoes() {
+            const cloudButton = document.getElementById('cloudButton');
+            const nzbButton = document.getElementById('nzbButton');
+            const animeUrl = anime.url; // Obtém o URL do anime
+
+            // Obtém a URL armazenada no localStorage
+            const urlArmazenada = localStorage.getItem('url');
+
+            if (urlArmazenada) {
+                // Concatena a URL armazenada com a URL do anime
+                const urlConcatenada = urlArmazenada + animeUrl;
+
+                // Define a URL concatenada no atributo data-url dos botões
+                cloudButton.dataset.url = urlConcatenada;
+                nzbButton.dataset.url = urlConcatenada;
+            } else {
+                // Se não houver URL armazenada, apenas define a URL do anime
+                cloudButton.dataset.url = animeUrl;
+                nzbButton.dataset.url = animeUrl;
+            }
+        }
+
+        // Chama a função ao carregar a página
+        window.onload = configurarBotoes;
                         });
                     })
                     .catch(error => {
