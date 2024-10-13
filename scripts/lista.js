@@ -105,12 +105,7 @@ function showAnimesByCategory(animes) {
             const title = document.createElement('h3');
             title.textContent = anime.title;
             title.title = anime.title; // Define o texto do tooltip como o título do anime
-
-            const title = document.createElement('h3');
-            title.textContent = anime.title;
-
-            const imageLink = document.createElement('a');
-
+      
             // Verifica se a URL base está armazenada
             if (urlBase) {
                 // Concatena a URL do localStorage com anime.url
