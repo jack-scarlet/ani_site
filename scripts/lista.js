@@ -93,11 +93,19 @@ function showAnimesByCategory(animes) {
     const animeGrid = document.getElementById('animeGrid');
     animeGrid.innerHTML = '';
 
+    // Obtém a URL armazenada no localStorage
+    const urlBase = localStorage.getItem('url');
+
     if (animes && animes.length > 0) {
         animes.forEach(anime => {
             const animeCard = document.createElement('div');
             animeCard.classList.add('animeCard');
-             
+
+            const title = document.createElement('h3');
+            title.textContent = anime.title;
+
+            const imageLink = document.createElement('a');
+
             // Verifica se a URL base está armazenada
             if (urlBase) {
                 // Concatena a URL do localStorage com anime.url
