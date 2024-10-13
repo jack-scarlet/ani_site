@@ -77,6 +77,9 @@ function showAnimesByCategory(animes) {
     const animeGrid = document.getElementById('animeGrid');
     animeGrid.innerHTML = '';
 
+    // Obtém a URL armazenada no localStorage
+    const urlBase = localStorage.getItem('url');
+
     if (animes && animes.length > 0) {
         animes.forEach(anime => {
             const animeCard = document.createElement('div');
@@ -86,14 +89,23 @@ function showAnimesByCategory(animes) {
             title.textContent = anime.title;
 
             const imageLink = document.createElement('a');
-            imageLink.href = anime.url;
+
+            // Verifica se a URL base está armazenada
+            if (urlBase) {
+                // Concatena a URL do localStorage com anime.url
+                const fullUrl = urlBase + anime.url;
+                imageLink.href = fullUrl; // Define o URL concatenado
+            } else {
+                console.error("URL base não encontrada no localStorage.");
+                imageLink.href = anime.url; // Se não houver URL base, usa a URL do anime
+            }
+
             imageLink.target = "_blank";
 
             const image = document.createElement('img');
             image.src = anime.image;
 
             imageLink.appendChild(image);
-
             animeCard.appendChild(title);
             animeCard.appendChild(imageLink);
 
@@ -105,6 +117,7 @@ function showAnimesByCategory(animes) {
         animeGrid.appendChild(noAnimeMessage);
     }
 }
+
 
 // Função para pesquisar por manga
 function searchByAnime(data) {
