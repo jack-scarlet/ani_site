@@ -17,7 +17,7 @@
 document.addEventListener('DOMContentLoaded', async function () {
     try {
         // Carrega os dados do JSON
-        const response = await fetch('../list/anime_list.json');
+        const response = await fetch('../list/manga_list.json');
         const data = await response.json();
 
         // Extrai as categorias (letras) dos dados
@@ -45,29 +45,33 @@ document.addEventListener('DOMContentLoaded', async function () {
             historyButton.remove();
         }
 
+        // Exibir inicialmente a categoria "history" (ou outra categoria desejada)
+        const initialCategory = 'history';
+        showAnimesByCategory(data[initialCategory]);
+
         // Criação da caixa de pesquisa
         const searchContainer = document.getElementById('searchContainer');
         const searchInput = document.createElement('input');
         searchInput.type = 'text';
-        searchInput.placeholder = 'Pesquisar Anime';
+        searchInput.placeholder = 'Pesquisar Mangas';
         searchInput.id = 'searchInput';
 
         // Adiciona a caixa de pesquisa ao seu container
         searchContainer.appendChild(searchInput);
 
-        // Criação do botão de pesquisa
-        const searchButton = document.createElement('button');
-        searchButton.id = 'searchButton';
+       // Criação do botão de pesquisa
+const searchButton = document.createElement('button');
+searchButton.id = 'searchButton';
 
-        // Cria o ícone da lupa
-        const searchIcon = document.createElement('i');
-        searchIcon.classList.add('fas', 'fa-search'); // Adiciona as classes para o ícone da Font Awesome
-        searchButton.appendChild(searchIcon); // Adiciona o ícone ao botão de pesquisa
+// Cria o ícone da lupa
+const searchIcon = document.createElement('i');
+searchIcon.classList.add('fas', 'fa-search'); // Adiciona as classes para o ícone da Font Awesome
+searchButton.appendChild(searchIcon); // Adiciona o ícone ao botão de pesquisa
 
-        // Adiciona o botão de pesquisa ao seu container
-        searchContainer.appendChild(searchButton);
+// Adiciona o botão de pesquisa ao seu container
+searchContainer.appendChild(searchButton);
 
-        // Adiciona evento para pesquisa ao pressionar "Enter"
+// Adiciona evento para pesquisa ao pressionar "Enter"
         searchInput.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 searchByAnime(data);
@@ -79,9 +83,6 @@ document.addEventListener('DOMContentLoaded', async function () {
             searchByAnime(data);
         });
 
-        // Exibir inicialmente a categoria "history" (ou outra categoria desejada)
-        const initialCategory = 'history';
-        showAnimesByCategory(data[initialCategory]);
     } catch (error) {
         console.error('Erro ao carregar o JSON:', error);
     }
@@ -92,18 +93,20 @@ function showAnimesByCategory(animes) {
     const animeGrid = document.getElementById('animeGrid');
     animeGrid.innerHTML = '';
 
+    // Obtém a URL armazenada no localStorage
+    const urlBase = localStorage.getItem('url');
+
     if (animes && animes.length > 0) {
         animes.forEach(anime => {
             const animeCard = document.createElement('div');
             animeCard.classList.add('animeCard');
 
-            // Cria o título do anime com um tooltip
             const title = document.createElement('h3');
             title.textContent = anime.title;
-            title.title = anime.title; // Define o texto do tooltip como o título do anime
 
             const imageLink = document.createElement('a');
-// Verifica se a URL base está armazenada
+
+            // Verifica se a URL base está armazenada
             if (urlBase) {
                 // Concatena a URL do localStorage com anime.url
                 const fullUrl = urlBase + anime.url;
@@ -126,12 +129,13 @@ function showAnimesByCategory(animes) {
         });
     } else {
         const noAnimeMessage = document.createElement('p');
-        noAnimeMessage.textContent = 'Nenhum anime encontrado nestaa categoria.';
+        noAnimeMessage.textContent = 'Nenhum manga encontrado nesta categoria.';
         animeGrid.appendChild(noAnimeMessage);
     }
 }
 
-// Função para pesquisar por anime
+
+// Função para pesquisar por manga
 function searchByAnime(data) {
     const searchInput = document.getElementById('searchInput');
     const searchTerm = searchInput.value.toLowerCase();
@@ -149,6 +153,6 @@ function searchByAnime(data) {
         }
     });
 
-    // Exibe os animes correspondentes ou uma mensagem se nenhum for encontrado
+    // Exibe os mangas correspondentes ou uma mensagem se nenhum for encontrado
     showAnimesByCategory(matchingAnimes);
 }
