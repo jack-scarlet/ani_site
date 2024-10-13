@@ -101,6 +101,11 @@ function showAnimesByCategory(animes) {
             const animeCard = document.createElement('div');
             animeCard.classList.add('animeCard');
 
+         // Cria o título do anime com um tooltip
+            const title = document.createElement('h3');
+            title.textContent = anime.title;
+            title.title = anime.title; // Define o texto do tooltip como o título do anime
+
             const title = document.createElement('h3');
             title.textContent = anime.title;
 
