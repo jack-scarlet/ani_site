@@ -72,7 +72,7 @@ searchContainer.appendChild(searchButton);
     }
 });
 
-// Função para mostrar animes por categoria
+// Função para mostrar mangas por categoria
 function showAnimesByCategory(animes) {
     const animeGrid = document.getElementById('animeGrid');
     animeGrid.innerHTML = '';
@@ -87,6 +87,7 @@ function showAnimesByCategory(animes) {
 
             const title = document.createElement('h3');
             title.textContent = anime.title;
+            title.title = anime.title; // Define o texto do tooltip como o título do manga
 
             const imageLink = document.createElement('a');
 
@@ -97,7 +98,7 @@ function showAnimesByCategory(animes) {
                 imageLink.href = fullUrl; // Define o URL concatenado
             } else {
                 console.error("URL base não encontrada no localStorage.");
-                imageLink.href = anime.url; // Se não houver URL base, usa a URL do anime
+                imageLink.href = anime.url; // Se não houver URL base, usa a URL do manga
             }
 
             imageLink.target = "_blank";
