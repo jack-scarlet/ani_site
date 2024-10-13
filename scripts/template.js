@@ -178,31 +178,28 @@ document.addEventListener('DOMContentLoaded', function () {
                             listItem.appendChild(link);
                             relatedAnimeList.appendChild(listItem);
 
-                                   // Função para configurar os botões com a URL concatenada
-        function configurarBotoes() {
-            const cloudButton = document.getElementById('cloudButton');
-            const nzbButton = document.getElementById('nzbButton');
-            const animeUrl = anime.url; // Obtém o URL do anime
+                            // Agora, defina os URLs nos botões
+                         // Obtém a URL armazenada no localStorage
+const urlBase = localStorage.getItem('url');
 
-            // Obtém a URL armazenada no localStorage
-            const urlArmazenada = localStorage.getItem('url');
+// Verifica se a URL base está armazenada antes de continuar
+if (urlBase) {
+    // Agora, defina os URLs nos botões
+    const cloudButton = document.getElementById('cloudButton');
+    const nzbButton = document.getElementById('nzbButton');
+    
+    const animeUrl = anime.url; // Obtém o URL do anime
+    
+    // Concatena a URL do localStorage com o anime.url
+    const fullUrl = urlBase + animeUrl;
+    
+    // Define o URL concatenado no atributo data-url dos botões
+    cloudButton.dataset.url = fullUrl; // Define no botão Cloud
+    nzbButton.dataset.url = fullUrl;   // Define no botão NZB
+} else {
+    console.error("URL base não encontrada no localStorage.");
+}
 
-            if (urlArmazenada) {
-                // Concatena a URL armazenada com a URL do anime
-                const urlConcatenada = urlArmazenada + animeUrl;
-
-                // Define a URL concatenada no atributo data-url dos botões
-                cloudButton.dataset.url = urlConcatenada;
-                nzbButton.dataset.url = urlConcatenada;
-            } else {
-                // Se não houver URL armazenada, apenas define a URL do anime
-                cloudButton.dataset.url = animeUrl;
-                nzbButton.dataset.url = animeUrl;
-            }
-        }
-
-        // Chama a função ao carregar a página
-        window.onload = configurarBotoes;
                         });
                     })
                     .catch(error => {
