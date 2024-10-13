@@ -87,6 +87,7 @@ function showAnimesByCategory(animes) {
 
             const title = document.createElement('h3');
             title.textContent = anime.title;
+            title.title = anime.title; // Define o texto do tooltip como o título do anime
 
             const imageLink = document.createElement('a');
 
