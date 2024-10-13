@@ -1,3 +1,19 @@
+ // Função para mostrar o alerta e armazenar a URL
+        function solicitarUrl() {
+            // Verifica se a URL já está armazenada
+            const urlArmazenada = localStorage.getItem('url');
+            if (!urlArmazenada) {
+                const url = prompt("Digite uma URL:");
+                if (url) {
+                    // Armazena a URL no localStorage
+                    localStorage.setItem('url', url);
+                }
+            }
+        }
+
+        // Chama a função ao carregar a página
+        window.onload = solicitarUrl;
+
 document.addEventListener('DOMContentLoaded', async function () {
     try {
         // Carrega os dados do JSON
