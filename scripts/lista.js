@@ -93,6 +93,10 @@ function showAnimesByCategory(animes) {
     const animeGrid = document.getElementById('animeGrid');
     animeGrid.innerHTML = '';
 
+             const title = document.createElement('h3');
+            title.textContent = anime.title;
+            title.title = anime.title; // Define o texto do tooltip como o título do anime
+
     // Obtém a URL armazenada no localStorage
     const urlBase = localStorage.getItem('url');
 
