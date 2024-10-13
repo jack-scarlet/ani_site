@@ -97,12 +97,7 @@ function showAnimesByCategory(animes) {
         animes.forEach(anime => {
             const animeCard = document.createElement('div');
             animeCard.classList.add('animeCard');
-
-            // Cria o título do anime com um tooltip
-            const title = document.createElement('h3');
-            title.textContent = anime.title;
-            title.title = anime.title; // Define o texto do tooltip como o título do anime
-      
+             
             // Verifica se a URL base está armazenada
             if (urlBase) {
                 // Concatena a URL do localStorage com anime.url
