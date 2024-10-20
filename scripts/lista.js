@@ -45,9 +45,26 @@ document.addEventListener('DOMContentLoaded', async function () {
             historyButton.remove();
         }
 
-        // Exibir inicialmente a categoria "history" (ou outra categoria desejada)
-        const initialCategory = 'history';
-        showAnimesByCategory(data[initialCategory]);
+// Função para selecionar 20 animes aleatórios de todas as categorias
+function getRandomAnimes(data, count = 20) {
+    const allAnimes = [];
+
+    // Coletar todos os animes de todas as categorias, exceto 'history'
+    Object.keys(data).forEach(category => {
+        if (category.toLowerCase() !== 'history') {
+            allAnimes.push(...data[category]);
+        }
+    });
+
+    // Embaralhar os animes e selecionar a quantidade desejada
+    const shuffledAnimes = allAnimes.sort(() => 0.5 - Math.random());
+    return shuffledAnimes.slice(0, count);
+}
+
+// Exibir 20 animes aleatórios na página inicial
+const randomAnimes = getRandomAnimes(data, 20);
+showAnimesByCategory(randomAnimes);
+
 
         // Criação da caixa de pesquisa
         const searchContainer = document.getElementById('searchContainer');
