@@ -141,28 +141,39 @@ function showAnimesByCategory(animes) {
 }
 
 // Função para pesquisar por anime
-function searchByAnime(data) {
-    const searchInput = document.getElementById('searchInput');
-    const searchTerm = searchInput.value.toLowerCase();
+function searchByAnime(searchTerm) {
+    const results = [];
+    const searchLower = searchTerm.toLowerCase();
 
-    // Filtra os animes que correspondem ao termo de pesquisa
-    const matchingAnimes = [];
+    animeList.forEach(anime => {
+        // Verifica se o título existe
+        if (anime.title && anime.title.toLowerCase().includes(searchLower)) {
+            results.push(anime);
+        }
 
-    Object.keys(data).forEach(category => {
-        data[category].forEach(anime => {
-            // Verifica se o título ou a sinopse ou os títulos alternativos contêm o termo de pesquisa
-            const titleMatch = anime.title.toLowerCase().includes(searchTerm);
-            const synopsisMatch = anime.synopsis.toLowerCase().includes(searchTerm);
-            const altTitlesMatch = anime.alternative_titles.synonyms.some(altTitle => 
-                altTitle.toLowerCase().includes(searchTerm)
-            );
+        // Verifica os títulos alternativos
+        if (anime.alternative_titles && anime.alternative_titles.synonyms) {
+            anime.alternative_titles.synonyms.forEach(synonym => {
+                if (synonym.toLowerCase().includes(searchLower)) {
+                    results.push(anime);
+                }
+            });
+        }
 
-            if (titleMatch || synopsisMatch || altTitlesMatch) {
-                matchingAnimes.push(anime);
-            }
-        });
+        // Adicione verificações para outros campos que deseja buscar
+        if (anime.synopsis && anime.synopsis.toLowerCase().includes(searchLower)) {
+            results.push(anime);
+        }
+
+        // Exemplo para gêneros
+        if (anime.genres) {
+            anime.genres.forEach(genre => {
+                if (genre.name.toLowerCase().includes(searchLower)) {
+                    results.push(anime);
+                }
+            });
+        }
     });
 
-    // Exibe os animes correspondentes ou uma mensagem se nenhum for encontrado
-    showAnimesByCategory(matchingAnimes);
+    return results;
 }
