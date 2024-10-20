@@ -175,6 +175,6 @@ function searchByAnime(data) {
         }
     });
 
-    return matchingAnimes;
+    // Chama a função para mostrar os animes encontrados
+    showAnimesByCategory(matchingAnimes);
 }
-
