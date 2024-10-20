@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             historyButton.remove();
         }
 
-// Função para selecionar 20 animes aleatórios de todas as categorias
+// Função para selecionar 24 animes aleatórios de todas as categorias
 function getRandomAnimes(data, count = 24) {
     const allAnimes = [];
 
@@ -61,8 +61,8 @@ function getRandomAnimes(data, count = 24) {
     return shuffledAnimes.slice(0, count);
 }
 
-// Exibir 20 animes aleatórios na página inicial
-const randomAnimes = getRandomAnimes(data, 20);
+// Exibir 24 animes aleatórios na página inicial
+const randomAnimes = getRandomAnimes(data, 24);
 showAnimesByCategory(randomAnimes);
 
 
