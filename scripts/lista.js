@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
 
 // Função para selecionar 20 animes aleatórios de todas as categorias
-function getRandomAnimes(data, count = 20) {
+function getRandomAnimes(data, count = 24) {
     const allAnimes = [];
 
     // Coletar todos os animes de todas as categorias, exceto 'history'
