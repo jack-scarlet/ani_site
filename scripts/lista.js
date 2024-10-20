@@ -141,39 +141,41 @@ function showAnimesByCategory(animes) {
 }
 
 // Função para pesquisar por anime
-function searchByAnime(searchTerm) {
-    const results = [];
-    const searchLower = searchTerm.toLowerCase();
+function searchByAnime(data) {
+    const searchInput = document.getElementById('searchInput');
+    const searchTerm = searchInput.value.toLowerCase();
 
-    animeList.forEach(anime => {
-        // Verifica se o título existe
-        if (anime.title && anime.title.toLowerCase().includes(searchLower)) {
-            results.push(anime);
-        }
+    // Filtra os animes que correspondem ao termo de pesquisa, excluindo a categoria 'history'
+    const matchingAnimes = new Set(); // Usar Set para evitar duplicatas
 
-        // Verifica os títulos alternativos
-        if (anime.alternative_titles && anime.alternative_titles.synonyms) {
-            anime.alternative_titles.synonyms.forEach(synonym => {
-                if (synonym.toLowerCase().includes(searchLower)) {
-                    results.push(anime);
+    Object.keys(data).forEach(category => {
+        if (category.toLowerCase() !== 'history') {
+            data[category].forEach(anime => {
+                // Verifica se o título corresponde ao termo de pesquisa
+                if (anime.title.toLowerCase().includes(searchTerm)) {
+                    matchingAnimes.add(anime); // Adiciona ao Set
                 }
-            });
-        }
 
-        // Adicione verificações para outros campos que deseja buscar
-        if (anime.synopsis && anime.synopsis.toLowerCase().includes(searchLower)) {
-            results.push(anime);
-        }
-
-        // Exemplo para gêneros
-        if (anime.genres) {
-            anime.genres.forEach(genre => {
-                if (genre.name.toLowerCase().includes(searchLower)) {
-                    results.push(anime);
+                // Verifica os alternative_titles
+                if (anime.alternative_titles) {
+                    if (anime.alternative_titles.en && anime.alternative_titles.en.toLowerCase().includes(searchTerm)) {
+                        matchingAnimes.add(anime); // Adiciona ao Set
+                    }
+                    if (anime.alternative_titles.ja && anime.alternative_titles.ja.toLowerCase().includes(searchTerm)) {
+                        matchingAnimes.add(anime); // Adiciona ao Set
+                    }
+                    if (anime.alternative_titles.synonyms) {
+                        anime.alternative_titles.synonyms.forEach(synonym => {
+                            if (synonym.toLowerCase().includes(searchTerm)) {
+                                matchingAnimes.add(anime); // Adiciona ao Set
+                            }
+                        });
+                    }
                 }
             });
         }
     });
 
-    return results;
+    // Converte o Set de volta para um array antes de retornar
+    return Array.from(matchingAnimes);
 }
