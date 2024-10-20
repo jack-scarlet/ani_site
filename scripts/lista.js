@@ -145,17 +145,22 @@ function searchByAnime(data) {
     const searchInput = document.getElementById('searchInput');
     const searchTerm = searchInput.value.toLowerCase();
 
-    // Filtra os animes que correspondem ao termo de pesquisa, excluindo a categoria 'history'
+    // Filtra os animes que correspondem ao termo de pesquisa
     const matchingAnimes = [];
 
     Object.keys(data).forEach(category => {
-        if (category.toLowerCase() !== 'history') {
-            data[category].forEach(anime => {
-                if (anime.title.toLowerCase().includes(searchTerm)) {
-                    matchingAnimes.push(anime);
-                }
-            });
-        }
+        data[category].forEach(anime => {
+            // Verifica se o título ou a sinopse ou os títulos alternativos contêm o termo de pesquisa
+            const titleMatch = anime.title.toLowerCase().includes(searchTerm);
+            const synopsisMatch = anime.synopsis.toLowerCase().includes(searchTerm);
+            const altTitlesMatch = anime.alternative_titles.synonyms.some(altTitle => 
+                altTitle.toLowerCase().includes(searchTerm)
+            );
+
+            if (titleMatch || synopsisMatch || altTitlesMatch) {
+                matchingAnimes.push(anime);
+            }
+        });
     });
 
     // Exibe os animes correspondentes ou uma mensagem se nenhum for encontrado
