@@ -114,6 +114,7 @@ button:hover {
 
 #menu {
     display: flex;
+    justify-content: center; /* Centraliza os botões no menu */
     overflow-x: auto;
     white-space: nowrap;
     width: 100%; /* Ajusta o menu para usar toda a largura da tela */
@@ -126,6 +127,7 @@ button:hover {
     margin: 0 5px; /* Espaçamento entre os botões */
     font-size: 16px;
 }
+
 
 
 
