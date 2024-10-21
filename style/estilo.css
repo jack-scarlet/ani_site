@@ -117,7 +117,7 @@ button:hover {
     width: 300px;
     margin: 10px auto;
     display: grid;
-    grid-template-columns: repeat(12, 1fr);
+    grid-template-columns: repeat(10, 1fr);
     grid-template-rows: auto auto;
     /* Distribui o conteúdo em duas linhas */
     gap: 10px;
