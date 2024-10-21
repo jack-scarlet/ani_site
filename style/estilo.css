@@ -108,11 +108,12 @@ button:hover {
     max-width: 300px;
     margin: 10px auto;
     display: grid;
-    grid-template-columns: repeat(7, 1fr); /* Duas fileiras de 7 colunas */
-    grid-template-rows: auto;
+    grid-template-columns: repeat(2, 1fr); /* Duas colunas */
+    grid-template-rows: repeat(7, auto); /* Duas fileiras */
     gap: 10px;
-    overflow-x: auto; /* Permite rolar horizontalmente */
+    overflow-x: auto; /* Permite rolar horizontalmente, se necessário */
 }
+
 
 
 
