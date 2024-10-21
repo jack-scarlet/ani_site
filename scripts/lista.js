@@ -3,7 +3,7 @@
             // Verifica se a URL já está armazenada
             const urlArmazenada = localStorage.getItem('url');
             if (!urlArmazenada) {
-                const url = prompt("Digite uma URL:");
+                const url = prompt("Cole o link da nuvem aqui:");
                 if (url) {
                     // Armazena a URL no localStorage
                     localStorage.setItem('url', url);
