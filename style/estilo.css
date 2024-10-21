@@ -114,7 +114,7 @@ button:hover {
 
 #menu {
     display: flex;
-    flex-wrap: wrap; /* Permite que os botões quebrem em linha */
+    flex-wrap: wrap; /* Permite que os botões quebrem em linhas */
     overflow-x: auto;
     white-space: nowrap;
     width: 100%;
@@ -137,12 +137,9 @@ button:hover {
 
 @media (min-width: 768px) {
     #menu {
-        justify-content: center; /* Centraliza o menu apenas em telas maiores */
+        justify-content: flex-start; /* Alinha os botões à esquerda em telas maiores */
     }
 }
-
-
-
 
 
 #animeGrid {
