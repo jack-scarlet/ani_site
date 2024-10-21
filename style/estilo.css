@@ -113,14 +113,11 @@ button:hover {
 }
 
 #menu {
-    justify-content: center;
-    width: 300px;
-    margin: 10px auto;
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: auto auto;
-    /* Distribui o conteúdo em duas linhas */
-    gap: 10px;
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    width: 100%; /* Ajusta o menu para usar toda a largura da tela */
+    padding: 10px 0; /* Espaçamento superior e inferior */
 }
 
 
