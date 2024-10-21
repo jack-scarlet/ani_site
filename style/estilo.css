@@ -115,6 +115,7 @@ button:hover {
 #menu {
     display: flex;
     overflow-x: auto;
+    grid-template-columns: repeat(14, 1fr);
     white-space: nowrap;
     width: 100%;
     padding: 10px 0;
