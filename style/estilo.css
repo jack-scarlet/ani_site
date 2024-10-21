@@ -111,9 +111,9 @@ button:hover {
     grid-template-columns: repeat(14, 1fr); /* 14 colunas */
     grid-template-rows: repeat(2, auto); /* 2 fileiras */
     gap: 10px;
-    overflow-x: auto; /* Permite rolar horizontalmente se necessário */
+    overflow-x: scroll; /* Permite rolar horizontalmente */
+    white-space: nowrap; /* Garante que os itens fiquem numa linha contínua */
 }
-
 
 
 
