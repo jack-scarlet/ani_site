@@ -108,10 +108,12 @@ button:hover {
     max-width: 300px;
     margin: 10px auto;
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Mudança para manter duas colunas */
+    grid-template-columns: repeat(7, 1fr); /* Duas fileiras de 7 colunas */
+    grid-template-rows: auto;
     gap: 10px;
     overflow-x: auto; /* Permite rolar horizontalmente */
 }
+
 
 
 #animeGrid {
