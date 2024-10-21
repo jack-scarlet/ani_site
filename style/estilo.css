@@ -5,27 +5,25 @@ body {
     background-color: #f5f5f5;
 }
 
-
-
-
 #searchContainer {
     display: flex;
     align-items: center;
-    /* Centraliza verticalmente */
     justify-content: center;
-    /* Centraliza horizontalmente */
     margin-top: 20px;
+    flex-wrap: wrap; /* Adicionado para responsividade */
 }
 
 #searchInput {
-    width: 300px;
+    width: 100%;
+    max-width: 300px;
     padding: 10px;
     margin-right: 10px;
-    /* Adiciona algum espaçamento entre o campo de pesquisa e o botão */
+    box-sizing: border-box; /* Adicionado para responsividade */
 }
 
 #searchButton {
-    width: 40px;
+    width: 100%;
+    max-width: 40px;
     height: 40px;
     background-color: #007bff;
     color: #fff;
@@ -44,19 +42,31 @@ body {
     background-color: #45a049;
 }
 
-
-
-
-
+button {
+    width: 100%;
+    max-width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
 
 button:hover {
     background-color: #45a049;
 }
 
 .botao {
-    width: 100px;
+    width: 100%;
+    max-width: 100px;
     height: 40px;
-    /* Ajuste a altura conforme necessário */
     display: inline-block;
     background-color: #007bff;
     color: #fff;
@@ -68,29 +78,23 @@ button:hover {
     text-decoration: none;
     text-align: center;
     margin: 5px;
-    /* Adiciona algum espaço entre os botões */
 }
 
 .botao:hover {
     background-color: #45a049;
-    /* Cor verde ao passar o mouse */
 }
 
 .botao-mangas {
     background-color: #ebe715;
-    /* Cor verde para Mangas */
 }
 
 .botao-desenhos {
     background-color: #ffa500;
-    /* Cor laranja para Desenhos */
 }
 
 .botao-animes {
     background-color: #005eff;
-    /* Cor laranja para Desenhos */
 }
-
 
 #botop {
     margin: 0;
@@ -100,44 +104,25 @@ button:hover {
 
 #menu {
     justify-content: center;
-    width: 100%; /* Ajuste a largura do menu para ocupar o máximo possível em telas pequenas */
-    max-width: 300px; /* Define um limite máximo para o desktop */
+    width: 100%;
+    max-width: 300px;
     margin: 10px auto;
     display: grid;
-    grid-template-columns: repeat(14, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
     grid-template-rows: auto auto;
     gap: 10px;
 }
-
-/* Ajuste o menu em telas pequenas */
-@media (max-width: 600px) {
-    #menu {
-        grid-template-columns: repeat(4, 1fr); /* Reduza o número de colunas */
-    }
-
-    button {
-        width: 100%; /* O botão se adapta ao tamanho da coluna */
-    }
-}
-
-
-
 
 #animeGrid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px;
     margin: 30px auto;
-    height: 36px;
-    /* Duas linhas a 18px por linha */
-    line-height: 18px;
-    /* Igual ao tamanho da fonte para manter duas linhas */
     justify-content: center;
 }
 
 .animeCard {
     text-align: center;
-    /* Centraliza o texto */
     background-color: #fff;
     border: 1px solid #ddd;
     padding: 15px;
@@ -150,19 +135,14 @@ h3 {
     font-size: 18px;
     color: #333;
     height: 36px;
-    /* Duas linhas a 18px por linha */
     line-height: 18px;
-    /* Igual ao tamanho da fonte para manter duas linhas */
     overflow: hidden;
 }
 
-
 img {
-    width: 225px;
-    /* Largura fixa para todas as imagens */
-    height: 310px;
-    /* Altura fixa para todas as imagens */
+    width: 100%;
+    max-width: 225px;
+    height: auto; /* Alterado para responsividade */
     object-fit: cover;
-    /* Mantém a proporção e corta a imagem, se necessário */
     border-radius: 4px;
 }
