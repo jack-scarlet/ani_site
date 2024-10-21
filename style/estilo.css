@@ -114,8 +114,8 @@ button:hover {
 
 #menu {
     display: flex;
+    flex-wrap: wrap; /* Permite que os botões quebrem em linha */
     overflow-x: auto;
-    grid-template-columns: repeat(14, 1fr);
     white-space: nowrap;
     width: 100%;
     padding: 10px 0;
@@ -130,8 +130,9 @@ button:hover {
 #menu button {
     flex: none;
     padding: 10px;
-    margin: 0 5px;
+    margin: 5px; /* Espaçamento entre os botões */
     font-size: 16px;
+    max-width: 80px; /* Define uma largura máxima para os botões */
 }
 
 @media (min-width: 768px) {
@@ -139,6 +140,7 @@ button:hover {
         justify-content: center; /* Centraliza o menu apenas em telas maiores */
     }
 }
+
 
 
 
