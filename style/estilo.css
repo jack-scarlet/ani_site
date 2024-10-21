@@ -114,18 +114,29 @@ button:hover {
 
 #menu {
     display: flex;
-    justify-content: center; /* Centraliza os botões no menu */
     overflow-x: auto;
     white-space: nowrap;
-    width: 100%; /* Ajusta o menu para usar toda a largura da tela */
-    padding: 10px 0; /* Espaçamento superior e inferior */
+    width: 100%;
+    padding: 10px 0;
 }
 
-.category-button {
-    flex: none; /* Evita que os botões redimensionem */
+#menu-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+#menu button {
+    flex: none;
     padding: 10px;
-    margin: 0 5px; /* Espaçamento entre os botões */
+    margin: 0 5px;
     font-size: 16px;
+}
+
+@media (min-width: 768px) {
+    #menu {
+        justify-content: center; /* Centraliza o menu apenas em telas maiores */
+    }
 }
 
 
