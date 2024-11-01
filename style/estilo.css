@@ -105,6 +105,12 @@ background-color: #005eff;
 /* Cor laranja para Desenhos */
 }
 
+.botao-nuvem { 
+    background-color: #92c8d6; /* Cor do botão */
+    width: 120px; /* Ajuste a largura conforme necessário */
+    height: 50px; /* Ajuste a altura conforme necessário */
+}
+
 
 #botop {
 margin: 0;
