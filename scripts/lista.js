@@ -134,7 +134,7 @@ function showAnimesByCategory(animes) {
 
             // Adiciona a imagem pequena extra dentro do animeCard
             const smallImage = document.createElement('img');
-            smallImage.src = 'URL_DA_IMAGEM_PEQUENA'; // Substitua pelo caminho da imagem pequena
+            smallImage.src = 'https://static.significados.com.br/foto/bandeira-do-japao-fb.jpg?class=ogImageWide'; // Substitua pelo caminho da imagem pequena
             smallImage.classList.add('small-image'); // Adiciona uma classe para estilizar a imagem pequena
 
             animeCard.appendChild(title);
