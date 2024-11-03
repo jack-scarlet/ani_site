@@ -137,7 +137,7 @@ function showAnimesByCategory(animes) {
             flagImage.classList.add('small-image'); // Classe para estilizar a imagem da bandeira
 
             if (anime.nat === 'JP') {
-                flagImage.src = 'https://media.istockphoto.com/id/1332466002/pt/vetorial/flag-of-japan-vector.jpg?s=612x612&w=0&k=20&c=O-wJw5Zvo0IFq_g6S48pAKHBsmKvjtWvuKYFbJxK5yU='; // URL da bandeira do Japão
+                flagImage.src = 'https://www.br.emb-japan.go.jp/cultura/bandeira.jpg'; // URL da bandeira do Japão
             } else if (anime.nat === 'KR') {
                 flagImage.src = 'https://rlv.zcache.com.br/adesivo_redondo_bandeira_da_coreia_do_sul-ra5a8bbb9a2e24f01aed263271e012e0a_0ugmp_8byvr_644.webp'; // URL da bandeira da Coreia do Sul
             } else if (anime.nat === 'CN') {
