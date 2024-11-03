@@ -166,13 +166,7 @@ justify-content: center;
 }
 
 .animeCard {
-text-align: center;
-/* Centraliza o texto */
-background-color: #fff;
-border: 1px solid #ddd;
-padding: 15px;
-border-radius: 8px;
-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
 }
 
 .small-image {
@@ -182,6 +176,7 @@ box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     bottom: 5px;  /* Posiciona no canto inferior */
     right: 5px;   /* Ajuste conforme necessário */
 }
+
 
 h3 {
 margin-top: 0;
