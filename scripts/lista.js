@@ -137,11 +137,11 @@ function showAnimesByCategory(animes) {
             flagImage.classList.add('small-image'); // Classe para estilizar a imagem da bandeira
 
             if (anime.nat === 'JP') {
-                flagImage.src = 'https://static.significados.com.br/foto/bandeira-do-japao-fb.jpg'; // URL da bandeira do Japão
+                flagImage.src = 'https://media.istockphoto.com/id/1332466002/pt/vetorial/flag-of-japan-vector.jpg?s=612x612&w=0&k=20&c=O-wJw5Zvo0IFq_g6S48pAKHBsmKvjtWvuKYFbJxK5yU='; // URL da bandeira do Japão
             } else if (anime.nat === 'KR') {
                 flagImage.src = 'https://rlv.zcache.com.br/adesivo_redondo_bandeira_da_coreia_do_sul-ra5a8bbb9a2e24f01aed263271e012e0a_0ugmp_8byvr_644.webp'; // URL da bandeira da Coreia do Sul
             } else if (anime.nat === 'CN') {
-                flagImage.src = 'https://img.freepik.com/vetores-premium/bandeira-redonda-da-ilustracao-vetorial-de-icone-da-china-isolada_400474-684.jpg'; // URL da bandeira da China
+                flagImage.src = 'https://flagdownload.com/wp-content/uploads/Flag_of_Peoples_Republic_of_China_Flat_Round_Corner-1024x1024.png'; // URL da bandeira da China
             } else {
                 flagImage.src = ''; // Opcional: uma bandeira padrão ou nenhuma imagem se "nat" não corresponder a nenhum valor
             }
