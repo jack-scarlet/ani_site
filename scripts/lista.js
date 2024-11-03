@@ -132,14 +132,26 @@ function showAnimesByCategory(animes) {
             image.src = anime.image;
             imageLink.appendChild(image);
 
-            // Adiciona a imagem pequena extra dentro do animeCard
-            const smallImage = document.createElement('img');
-            smallImage.src = 'https://static.significados.com.br/foto/bandeira-do-japao-fb.jpg?class=ogImageWide'; // Substitua pelo caminho da imagem pequena
-            smallImage.classList.add('small-image'); // Adiciona uma classe para estilizar a imagem pequena
+            // Adiciona a imagem da bandeira dependendo do valor de "nat"
+            const flagImage = document.createElement('img');
+            flagImage.classList.add('small-image'); // Classe para estilizar a imagem da bandeira
 
+            if (anime.nat === 'JP') {
+                flagImage.src = 'https://static.significados.com.br/foto/bandeira-do-japao-fb.jpg?class=ogImageWide'; // URL da bandeira do Japão
+            } else if (anime.nat === 'KR') {
+                flagImage.src = 'https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg'; // URL da bandeira da Coreia do Sul
+            } else if (anime.nat === 'CN') {
+                flagImage.src = 'https://upload.wikimedia.org/wikipedia/commons/0/0d/Flag_of_China.svg'; // URL da bandeira da China
+            } else {
+                flagImage.src = ''; // Opcional: uma bandeira padrão ou nenhuma imagem se "nat" não corresponder a nenhum valor
+            }
+
+            // Adiciona os elementos ao card de anime
             animeCard.appendChild(title);
             animeCard.appendChild(imageLink);
-            animeCard.appendChild(smallImage); // Adiciona a imagem pequena ao card
+            if (flagImage.src) {
+                animeCard.appendChild(flagImage); // Adiciona a bandeira ao card somente se houver uma URL válida
+            }
 
             animeGrid.appendChild(animeCard);
         });
@@ -149,6 +161,7 @@ function showAnimesByCategory(animes) {
         animeGrid.appendChild(noAnimeMessage);
     }
 }
+
 
 
 // Função para pesquisar por anime
