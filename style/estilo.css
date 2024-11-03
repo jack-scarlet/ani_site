@@ -175,6 +175,14 @@ border-radius: 8px;
 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+.small-image {
+    width: 20px; /* Ajuste o tamanho conforme necessário */
+    height: auto;
+    position: absolute;
+    bottom: 5px;  /* Posiciona no canto inferior */
+    right: 5px;   /* Ajuste conforme necessário */
+}
+
 h3 {
 margin-top: 0;
 font-size: 18px;
