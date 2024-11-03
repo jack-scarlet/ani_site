@@ -121,32 +121,25 @@ function showAnimesByCategory(animes) {
 
             const title = document.createElement('h3');
             title.textContent = anime.title;
-            title.title = anime.title; // Define o texto do tooltip como o título do anime
+            title.title = anime.title;
 
             const imageLink = document.createElement('a');
-
-            // Verifica se a URL base está armazenada
-            if (urlBase) {
-                // Concatena a URL do localStorage com anime.url
-                const fullUrl = urlBase + anime.url;
-                imageLink.href = fullUrl; // Define o URL concatenado
-            } else {
-                console.error("URL base não encontrada no localStorage.");
-                if (anime.url) {
-                    imageLink.href = anime.url; // Se não houver URL base, usa a URL do anime
-                } else {
-                    console.error("URL do anime não encontrada.");
-                }
-            }
-
+            const fullUrl = urlBase ? `${urlBase}${anime.url}` : anime.url;
+            imageLink.href = fullUrl || '#';
             imageLink.target = "_blank";
 
             const image = document.createElement('img');
             image.src = anime.image;
-
             imageLink.appendChild(image);
+
+            // Adiciona a imagem pequena extra dentro do animeCard
+            const smallImage = document.createElement('img');
+            smallImage.src = 'URL_DA_IMAGEM_PEQUENA'; // Substitua pelo caminho da imagem pequena
+            smallImage.classList.add('small-image'); // Adiciona uma classe para estilizar a imagem pequena
+
             animeCard.appendChild(title);
             animeCard.appendChild(imageLink);
+            animeCard.appendChild(smallImage); // Adiciona a imagem pequena ao card
 
             animeGrid.appendChild(animeCard);
         });
@@ -156,6 +149,7 @@ function showAnimesByCategory(animes) {
         animeGrid.appendChild(noAnimeMessage);
     }
 }
+
 
 // Função para pesquisar por anime
 function searchByAnime(data) {
