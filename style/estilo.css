@@ -177,11 +177,11 @@ box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .small-image {
-    width: 20px; /* Ajuste o tamanho conforme necessário */
-    height: 20px; /* Certifique-se de que a altura e a largura sejam iguais para um círculo perfeito */
+    width: 25px; /* Ajuste o tamanho conforme necessário */
+    height: 25px; /* Certifique-se de que a altura e a largura sejam iguais para um círculo perfeito */
     position: absolute;
     top: 5px;    /* Posiciona no canto superior */
-    right: 1px;  /* Ajuste conforme necessário */
+    right: 2px;  /* Ajuste conforme necessário */
     border-radius: 50%; /* Torna a imagem circular */
     object-fit: cover; /* Garante que a imagem se ajuste bem dentro do círculo */
 }
