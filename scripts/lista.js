@@ -145,6 +145,23 @@ function showAnimesByCategoryAndNationality(animes) {
     }
 }
 
+// Função para selecionar animes aleatórios
+function getRandomAnimes(data, count) {
+    const allAnimes = [];
+    Object.keys(data).forEach(category => {
+        if (category.toLowerCase() !== 'history') {
+            allAnimes.push(...data[category]);
+        }
+    });
+
+    const randomAnimes = [];
+    while (randomAnimes.length < count && allAnimes.length > 0) {
+        const randomIndex = Math.floor(Math.random() * allAnimes.length);
+        randomAnimes.push(allAnimes.splice(randomIndex, 1)[0]);
+    }
+    return randomAnimes;
+}
+
 // Função para atualizar o filtro e exibir os animes filtrados
 function updateFilterAndDisplay(data) {
     const filteredAnimes = [];
