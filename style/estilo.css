@@ -44,6 +44,18 @@ justify-content: center;
 background-color: #45a049;
 }
 
+#filterContainer {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Espaço entre os botões */
+    margin-top: 20px; /* Ajuste de margem, opcional */
+}
+
+.filter-button {
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+}
 
 
 button {
