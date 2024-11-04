@@ -39,6 +39,20 @@ document.addEventListener('DOMContentLoaded', async function () {
             menu.appendChild(button);
         });
 
+     // Criação dos botões de filtro por nacionalidade
+const filterContainer = document.getElementById('filterContainer'); // Assumindo que você tem uma div com id "filterContainer"
+
+const filterButtons = ['JP', 'KR', 'CN'];
+filterButtons.forEach(nat => {
+    const button = document.createElement('button');
+    button.textContent = nat;
+    button.classList.add('filter-button');
+    button.addEventListener('click', () => filterByNationality(data, nat));
+
+    filterContainer.appendChild(button);
+});
+
+
         // Remove o botão da categoria "history"
         const historyButton = document.getElementById('history-button');
         if (historyButton) {
@@ -106,8 +120,12 @@ searchContainer.appendChild(searchButton);
 });
 
 // Função para mostrar animes por categoria
-// Função para mostrar animes por categoria
-function showAnimesByCategory(animes) {
+// Variáveis para armazenar os filtros de categoria e nacionalidade selecionados
+let selectedCategory = null;
+let selectedNationality = null;
+
+// Função para mostrar animes por categoria com filtro de nacionalidade
+function showAnimesByCategoryAndNationality(animes) {
     const animeGrid = document.getElementById('animeGrid');
     animeGrid.innerHTML = '';
 
@@ -161,6 +179,68 @@ function showAnimesByCategory(animes) {
         animeGrid.appendChild(noAnimeMessage);
     }
 }
+
+// Função para atualizar o filtro e exibir os animes filtrados
+function updateFilterAndDisplay(data) {
+    const filteredAnimes = [];
+
+    // Verifica se ambos os filtros estão aplicados
+    if (selectedCategory && selectedNationality) {
+        data[selectedCategory].forEach(anime => {
+            if (anime.nat === selectedNationality) {
+                filteredAnimes.push(anime);
+            }
+        });
+    }
+    // Caso apenas a categoria esteja selecionada
+    else if (selectedCategory) {
+        filteredAnimes.push(...data[selectedCategory]);
+    }
+    // Caso apenas a nacionalidade esteja selecionada
+    else if (selectedNationality) {
+        Object.keys(data).forEach(category => {
+            if (category.toLowerCase() !== 'history') {
+                data[category].forEach(anime => {
+                    if (anime.nat === selectedNationality) {
+                        filteredAnimes.push(anime);
+                    }
+                });
+            }
+        });
+    }
+
+    showAnimesByCategoryAndNationality(filteredAnimes);
+}
+
+// Adicionar evento de clique para cada botão de categoria (letra)
+categories.forEach(category => {
+    const button = document.createElement('button');
+    button.textContent = category;
+    button.classList.add('category-button');
+    button.addEventListener('click', () => {
+        selectedCategory = category;
+        updateFilterAndDisplay(data);
+    });
+
+    if (category === 'history') {
+        button.id = 'history-button';
+    }
+
+    menu.appendChild(button);
+});
+
+// Adicionar evento de clique para cada botão de nacionalidade (CN, KR, JP)
+filterButtons.forEach(nat => {
+    const button = document.createElement('button');
+    button.textContent = nat;
+    button.classList.add('filter-button');
+    button.addEventListener('click', () => {
+        selectedNationality = nat;
+        updateFilterAndDisplay(data);
+    });
+
+    filterContainer.appendChild(button);
+});
 
 
 
