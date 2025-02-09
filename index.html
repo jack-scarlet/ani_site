@@ -39,15 +39,15 @@
     <div id="animeGrid"></div>
 
     <script>
-        
+     
         // Garante que o script só seja executado após o carregamento do DOM
         document.addEventListener('DOMContentLoaded', function() {
             // Função para apagar a URL do localStorage e recarregar a página
-            // Abre o site em uma nova guia
-        window.open("https://anitsu.moe", "_blank");
             function apagarUrl() {
                 // Remove a URL armazenada no localStorage
                 localStorage.removeItem('url');
+                // Abre o site em uma nova guia
+            window.open("https://anitsu.moe", "_blank");
                 alert("URL removida do localStorage.");
 
                 // Recarrega a página
