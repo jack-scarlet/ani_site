@@ -41,9 +41,6 @@
         document.addEventListener('DOMContentLoaded', function () {
             // Função para apagar a URL do localStorage e recarregar a página
             function apagarUrl() {
-                // Abre a URL desejada em uma nova guia
-                window.open("https://anitsu.moe", "_blank");
-
                 // Remove a URL armazenada no localStorage
                 localStorage.removeItem('url');
                 alert("URL removida do localStorage.");
