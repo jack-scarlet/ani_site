@@ -1,28 +1,11 @@
-// Função para mostrar o alerta, armazenar a URL e abrir uma nova guia
+// Função para mostrar o alerta e armazenar a URL
 function solicitarUrl() {
     const urlArmazenada = localStorage.getItem('url');
     if (!urlArmazenada) {
         const url = prompt("Cole o link da nuvem aqui:");
-        if (url && validarUrl(url)) {
+        if (url) {
             localStorage.setItem('url', url);
-            alert("URL armazenada com sucesso!");
-            window.open(https://anitsu.moe, '_blank'); // Abre a URL em uma nova guia
-        } else {
-            alert("Por favor, insira uma URL válida.");
         }
-    } else {
-        alert("URL já armazenada: " + urlArmazenada);
-        window.open(urlArmazenada, '_blank'); // Abre a URL armazenada em uma nova guia
-    }
-}
-
-// Função para validar a URL
-function validarUrl(url) {
-    try {
-        new URL(url);
-        return true;
-    } catch (e) {
-        return false;
     }
 }
 
