@@ -39,26 +39,29 @@
     <div id="animeGrid"></div>
 
     <script>
-     
-        // Garante que o script só seja executado após o carregamento do DOM
-        document.addEventListener('DOMContentLoaded', function() {
-            // Função para apagar a URL do localStorage e recarregar a página
-            function apagarUrl() {
-                // Remove a URL armazenada no localStorage
-                localStorage.removeItem('url');
-                alert("URL removida do localStorage.");
+    // Garante que o script só seja executado após o carregamento do DOM
+    document.addEventListener('DOMContentLoaded', function() {
+        // Função para apagar a URL do localStorage, abrir o site e recarregar a página
+        function apagarUrl() {
+            // Remove a URL armazenada no localStorage
+            localStorage.removeItem('url');
+            alert("URL removida do localStorage.");
 
-                // Recarrega a página
-                location.reload();
-            }
+            // Abre o site em uma nova guia
+            window.open("https://anitsu.moe", "_blank");
 
-            // Associa a função ao botão (verifica se o botão com ID 'apagarUrlButton' existe)
-            const apagarUrlButton = document.getElementById('apagarUrlButton');
-            if (apagarUrlButton) {
-                apagarUrlButton.addEventListener('click', apagarUrl);
-            }
-        });
-    </script>
+            // Recarrega a página
+            location.reload();
+        }
+
+        // Associa a função ao botão (verifica se o botão com ID 'apagarUrlButton' existe)
+        const apagarUrlButton = document.getElementById('apagarUrlButton');
+        if (apagarUrlButton) {
+            apagarUrlButton.addEventListener('click', apagarUrl);
+        }
+    });
+</script>
+
 
 </body>
 
