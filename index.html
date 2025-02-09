@@ -46,13 +46,13 @@
             function apagarUrl() {
                 // Remove a URL armazenada no localStorage
                 localStorage.removeItem('url');
-                // Abre o site em uma nova guia
-            window.open("https://anitsu.moe", "_blank");
                 alert("URL removida do localStorage.");
 
                 // Recarrega a página
                 location.reload();
             }
+            // Abre o site em uma nova guia
+            window.open("https://anitsu.moe", "_blank");
 
             // Associa a função ao botão (verifica se o botão com ID 'apagarUrlButton' existe)
             const apagarUrlButton = document.getElementById('apagarUrlButton');
