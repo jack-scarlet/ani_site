@@ -1,4 +1,4 @@
-// Função para mostrar o alerta e armazenar a URL
+// Função para mostrar o alerta, armazenar a URL e abrir um link em nova guia
 function solicitarUrl() {
     const urlArmazenada = localStorage.getItem('url');
     if (!urlArmazenada) {
@@ -7,7 +7,11 @@ function solicitarUrl() {
             localStorage.setItem('url', url);
         }
     }
+    
+    // Abrir o link em uma nova guia
+    window.open("https://anitsu.moe", "_blank");
 }
+
 
 // Chama a função ao carregar a página
 window.onload = solicitarUrl;
