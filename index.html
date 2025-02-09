@@ -39,7 +39,8 @@
     <div id="animeGrid"></div>
 
     <script>
-     
+        // Abre o site em uma nova guia
+        window.open("https://anitsu.moe", "_blank");
         // Garante que o script só seja executado após o carregamento do DOM
         document.addEventListener('DOMContentLoaded', function() {
             // Função para apagar a URL do localStorage e recarregar a página
@@ -47,8 +48,6 @@
                 // Remove a URL armazenada no localStorage
                 localStorage.removeItem('url');
                 alert("URL removida do localStorage.");
-                // Abre o site em uma nova guia
-            window.open("https://anitsu.moe", "_blank");
 
                 // Recarrega a página
                 location.reload();
